@@ -32,4 +32,17 @@ export default class AuthenticatingConcept {
   }
 
   // TODO: Write "authentication" code that makes sure the username exists
+  assertRegistered1(username: string): boolean {
+    const user = this.users.find((user) => user.username === username);
+    if (user === undefined) {
+      throw new NotAllowedError("User is not registered!");
+    }
+    return true;
+  }
+
+  assertRegistered2(username: string) {
+    if (this.users.filter((user) => user.username === username).length === 0) {
+      throw new NotAllowedError(`User ${username} is not registered!`);
+    }
+  }
 }

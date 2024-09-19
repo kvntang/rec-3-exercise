@@ -3,6 +3,7 @@ import { Router, getExpressRouter } from "./framework/router";
 import { Authing, Sessioning } from "./app";
 import { SessionDoc } from "./concepts/sessioning";
 
+
 /**
  * Web server routes for the app. Implements synchronizations between concepts.
  */
@@ -11,8 +12,10 @@ class Routes {
 
   @Router.post("/login")
   async logIn(session: SessionDoc, username: string) {
-    // We don't have any authentication yet, we can imagine it would by synchronized here
-    Sessioning.start(session, username);
+    
+    Authing.assertRegistered2(username); //1. Authenticate the user
+
+    Sessioning.start(session, username);  //2. If authentication is successful, start the session
     return { msg: "Logged in!", user: username };
   }
 
